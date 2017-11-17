@@ -11,14 +11,10 @@ matrix:
     ##
     # Ubuntu 12.04 container build
     - os: linux
-      sudo: false
+      sudo: true
       env: COMPONENTS=ifort
-    # # Everything (for debugging without taxing Travis too heavily)
-    # - os: linux
-    #   sudo: false
-    #   env: COMPONENTS="icc,ifort,mpi,daal,ipp,tbb,mkl"
 before_install:
-  - ./install-icc.sh --components "${COMPONENTS}"
+  - bash -x install-icc.sh --components "${COMPONENTS}"
   - source ~/.bashrc
 script:
   # Fortran 90 compiler

@@ -14,18 +14,23 @@ matrix:
       sudo: true
       env: COMPONENTS=ifort
 before_install:
+  - chmod +x install-icc.sh
   - ./install-icc.sh --components "${COMPONENTS}"
   - source ~/.bashrc
   - chmod +x Asplundnew
+  - wget http://wwwuser.oats.inaf.it/castelli/sources/dfsynthe/molecules.dat
+  - wget http://wwwuser.oats.inaf.it/castelli/sources/dfsynthe/pfiron.dat
+  - wget http://wwwuser.oats.inaf.it/castelli/sources/dfsynthe/continua.dat
 script:
   # Fortran 90 compiler
   - ifort -save -o xnfdf.exe save/xnfdf.for 
-  - ./Asplundnew
+  - bash Asplundnew
   - diff xnfpdf.dat.test xnfpdf.dat
-  - diff xnfpdfmax.dat.test xnfpdfmax.dat.test
+  - diff xnfpdfmax.dat xnfpdfmax.dat.test
 
 after_script:
   - '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'
+
 
 #notifications:
 #  email:

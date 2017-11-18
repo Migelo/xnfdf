@@ -45,6 +45,8 @@ add_components() {
     fi
 }
 
+COMPONENTS="intel-itac-common__noarch;intel-trace-analyzer__x86_64;intel-trace-collector__x86_64;intel-itac-common-pset__noarch;intel_clck_common__x86_64;intel_clck_analyzer__x86_64;intel_clck_collector__x86_64;intel_clck__noarch;intel_clck_common-pset__noarch;intel-vtune-amplifier-2018-cli-common__noarch;intel-vtune-amplifier-2018-common__noarch;intel-vtune-amplifier-2018-cli__x86_64;intel-vtune-amplifier-2018-cli-32bit__i486;intel-vtune-amplifier-2018-collector-32linux__i486;intel-vtune-amplifier-2018-collector-64linux__x86_64;intel-vtune-amplifier-2018-doc__noarch;intel-vtune-amplifier-2018-sep__noarch;intel-vtune-amplifier-2018-target__noarch;intel-vtune-amplifier-2018-gui-common__noarch;intel-vtune-amplifier-2018-gui__x86_64;intel-vtune-amplifier-2018-common-pset__noarch;intel-inspector-2018-cli-common__noarch;intel-inspector-2018-cli__x86_64;intel-inspector-2018-cli-32bit__i486;intel-inspector-2018-doc__noarch;intel-inspector-2018-gui-common__noarch;intel-inspector-2018-gui__x86_64;intel-inspector-2018-cli-common-pset__noarch;intel-advisor-2018-cli-common__noarch;intel-advisor-2018-cli__x86_64;intel-advisor-2018-cli-32bit__i486;intel-advisor-2018-doc__noarch;intel-advisor-2018-gui-common__noarch;intel-advisor-2018-gui__x86_64;intel-advisor-2018-cli-common-pset__noarch;intel-comp__x86_64;intel-comp-doc__noarch;intel-comp-l-all-common__noarch;intel-comp-l-all-vars__noarch;intel-comp-nomcu-vars__noarch;intel-comp-ps__x86_64;intel-comp-ps-ss__x86_64;intel-comp-ps-ss-bec__x86_64;intel-openmp__x86_64;intel-openmp-common__noarch;intel-openmp-common-icc__noarch;intel-openmp-common-ifort__noarch;intel-openmp-ifort__x86_64;intel-tbb-libs__x86_64;intel-idesupport-icc-common-ps__noarch;intel-icc__x86_64;intel-c-comp-common__noarch;intel-icc-common__noarch;intel-icc-common-ps__noarch;intel-icc-common-ps-ss-bec__noarch;intel-icc-doc__noarch;intel-icc-doc-ps__noarch;intel-icc-ps__x86_64;intel-icc-ps-ss__x86_64;intel-icc-ps-ss-bec__x86_64;intel-ifort__x86_64;intel-ifort-common__noarch;intel-ifort-doc__noarch;intel-mkl-common__noarch;intel-mkl-core__x86_64;intel-mkl-core-rt__x86_64;intel-mkl-doc__noarch;intel-mkl-doc-ps__noarch;intel-mkl-gnu__x86_64;intel-mkl-gnu-rt__x86_64;intel-mkl-cluster__x86_64;intel-mkl-cluster-common__noarch;intel-mkl-cluster-rt__x86_64;intel-mkl-common-ps__noarch;intel-mkl-core-ps__x86_64;intel-mkl-common-c__noarch;intel-mkl-core-c__x86_64;intel-mkl-common-c-ps__noarch;intel-mkl-cluster-c__noarch;intel-mkl-tbb__x86_64;intel-mkl-tbb-rt__x86_64;intel-mkl-gnu-c__x86_64;intel-mkl-common-f__noarch;intel-mkl-core-f__x86_64;intel-mkl-cluster-f__noarch;intel-mkl-gnu-f-rt__x86_64;intel-mkl-gnu-f__x86_64;intel-mkl-f95-common__noarch;intel-mkl-f__x86_64;intel-ipp-common__noarch;intel-ipp-common-ps__noarch;intel-ipp-st__x86_64;intel-ipp-st-devel__x86_64;intel-ipp-st-devel-ps__x86_64;intel-ipp-doc__noarch;intel-tbb-devel__x86_64;intel-tbb-common__noarch;intel-tbb-doc__noarch;intel-daal-core__x86_64;intel-daal-common__noarch;intel-daal-doc__noarch;intel-imb__x86_64;intel-mpi-rt__x86_64;intel-mpi-sdk__x86_64;intel-mpi-doc__x86_64;intel-mpi-samples__x86_64;intel-gdb-gt__x86_64;intel-gdb-gt-doc__noarch;intel-gdb-gt-doc-ps__noarch;intel-gdb__x86_64;intel-gdb-common__noarch;intel-gdb-doc__noarch;intel-ism__noarch;intel-icsxe__noarch;intel-gdb-doc-ps__noarch;intel-gdb-mic__x86_64;intel-psxe-common__noarch;intel-psxe-doc__noarch;intel-psxe-common-doc__noarch;intel-icsxe-doc__noarch;intel-psxe-licensing__noarch;intel-psxe-licensing-doc__noarch;intel-icsxe-pset"
+
 while [ $# != 0 ]; do
     case "$1" in
 	"--dest")
@@ -57,53 +59,6 @@ while [ $# != 0 ]; do
 	    shift
 	    OLD_IFS="${IFS}"
 	    IFS=","
-	    for component in $1; do
-		case "$component" in
-		    "icc")
-			add_components "${COMPONENTS_ICC}"
-		        ;;
-		    "mpi")
-			add_components "${COMPONENTS_MPI}"
-			;;
-		    "vtune")
-			add_components "${COMPONENTS_VTUNE}"
-			;;
-		    "inspector")
-			add_components "${COMPONENTS_INSPECTOR}"
-			;;
-		    "advisor")
-			add_components "${COMPONENTS_ADVISOR}"
-			;;
-		    "tbb")
-			add_components "${COMPONENTS_TBB}"
-			;;
-		    "ifort")
-			add_components "${COMPONENTS_IFORT}"
-			;;
-		    "mkl")
-			add_components "${COMPONENTS_MKL}"
-			;;
-		    "openmp")
-			# Noop, here for compatability.  OpenMP is installed with icc and ifort now.
-			;;
-		    "ipp")
-			add_components "${COMPONENTS_IPP}"
-			;;
-		    "ipp-crypto")
-			add_components "${COMPONENTS_IPP_CRYPTO}"
-			;;
-		    "gdb")
-			add_components "${COMPONENTS_GDB}"
-			;;
-		    "daal")
-			add_components "${COMPONENTS_DAAL}"
-			;;
-		    *)
-			echo "Unknown component '$component'"
-			exit 1
-			;;
-		esac
-	    done
 	    IFS="${OLD_IFS}"
 	    ;;
 	*)
@@ -118,10 +73,11 @@ if [ -z "${COMPONENTS}" ]; then
     COMPONENTS="${COMPONENTS_ICC}"
 fi
 
-INSTALLER_SCRIPT="parallel_studio_xe_2016_update3_online.sh"
+INSTALLER_SCRIPT="parallel_studio_xe_2018_update1_cluster_edition_online"
 INSTALLER="${TEMPORARY_FILES}/${INSTALLER_SCRIPT}"
-INSTALLER_URL="http://registrationcenter-download.intel.com/akdlm/irc_nas/9061/${INSTALLER_SCRIPT}"
-SILENT_CFG="${TEMPORARY_FILES}/silent.cfg"
+INSTALLER_URL="http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12374/${INSTALLER_SCRIPT}.tzg"
+#INSTALLER_URL="http://registrationcenter-download.intel.com/akdlm/irc_nas/9061/"
+SILENT_CFG="${TEMPORARY_FILES}/${INSTALLER_SCRIPT}/silent.cfg"
 SUCCESS_INDICATOR="${TEMPORARY_FILES}/icc-travis-success"
 
 if [ ! -e "${TEMPORARY_FILES}" ]; then
@@ -135,9 +91,10 @@ if [ ! -e "${DESTINATION}" ]; then
 fi
 
 if [ ! -e "${INSTALLER}" ]; then
-	wget -O "${INSTALLER}" "${INSTALLER_URL}" || exit 1
+    wget -P /tmp/ http://registrationcenter-download.intel.com/akdlm/irc_nas/tec/12374/parallel_studio_xe_2018_update1_cluster_edition_online.tgz || exit 1
+    tar xf /tmp/parallel_studio_xe_2018_update1_cluster_edition_online.tgz -C "${TEMPORARY_FILES}"
 fi
-chmod u+x "${INSTALLER}"
+chmod u+x "${TEMPORARY_FILES}/${INSTALLER_SCRIPT}/install.sh"
 
 # See https://software.intel.com/en-us/articles/intel-composer-xe-2015-silent-installation-guide
 echo "# Generated silent configuration file" > "${SILENT_CFG}"
@@ -162,7 +119,7 @@ while [ $attempt -le 3 ]; do
 	mkdir -p "${TEMPORARY_FILES}/parallel-studio-install-data" || (sudo mkdir -p "${TEMPORARY_FILES}/parallel-studio-install-data" && sudo chown -R "${USER}:${USER}" "${TEMPORARY_FILES}")
     fi
 
-    ("${INSTALLER}" \
+    ("${INSTALLER}/install.sh" \
 	 -t "${TEMPORARY_FILES}/parallel-studio-install-data" \
 	 -s "${SILENT_CFG}" \
 	 --cli-mode \

@@ -3,7 +3,7 @@ sudo: false
 env:
   global:
     # Intel Parallel Studio
-    - secure: "pRthq4b59pqfe333JklO6VAuRR2OTfecg0X2cAznmzsmNj8AF/hL1HQCoUScPwSwLBfVCfaEK/sT1jXCG3nz1/TQtwtVuarQuylSzxnqJZJEubDOhpT8nNnvAqVvgGzsq7z4FgBUmk+Nv6nrFkf8FGqfgRY3/djeogmNWs8FYRPXeqnBUTix5mlTY1rim940RdTzipo8IlXhpux9Dwjr6U+jKaKDEqq3t5AMqmBAcF5KulNJhCbSQhIu3hNs7hhMGPyxbbX9FfYtBQ45IU87FqSOfUfp2jOmw+h1N6XMIlqXTtshR3IditvXkhtOY9Aw6QE39oX1ivCFzqnk2iFmNArWnOHIltTT72zKuwURX2WQU6y7FfsF1NrtGijHJsfqieRDgBWnfoNFm9nCJQSv6g/tFXsT95dmvipzvzqSGpkArTc6kWBkFnfKy9FfbLnHm9V2L+PFI5HFXNZaEobmM4FKHSGxkQNwBoXufnmCWV2ZIf3uLfwERqL92Sas2lkoOV/mEznI30AeowTnCG1+cUvFRZOrv+5UFUuRSQi83DBFzsXQJjoYEnezA9kVWSVAuamBKRiOZ5YvLngiRJPmIdUC3m4N/6zOK68ouCJy06S/LzrFkWNMS74zwYI1ICiJt7Yt4Khzl35KoP+C1NOLuylj1OyIipActGoOH8z71a4="
+    - secure: "IK66gBj3RMbOqPAslQ2V09Sx8bV8aSHAdaO4beFuDXlRsaiBDqlKnII86Nw0ghELmwGAtH3Ow7I8pkjCyyB0v/R0ruOVW2SwPrtIcYGVEvT3BI9uQkCq9PInh4gdgdqsa5zxJU1XKtj9jX/gHbjlFgNJkXIlbvdttVQ8wad7EmSSv5i8Tb/gRDqa176lkGgSj5crMe072TEHuAe0Kllphol1mD0EjKkcfoFd9SBURG66aPuUOM4InSM+3o1Qw7t7+3oarOJPMu4eONAxp61iVWpIy1dRKGf1pYW5MwQ1JMkqc50MKF8EKjAwUVwggVTG7H5hntwwuDlzLyo33mEE8n//VbbjEBgozhyMcsYaIpPvGDA1bItgUohO8xf002JMG9bdbaC9jpU5TLLvg4rGDg6rbPTqtaIhTebA+xaWj2tHpf5Rv9D45EgtrxSfmMywGkoMf9iWEo1iGGgdmCMQKxwmmSG8FYIYJMGaq7Hmp8ZsCmQadOfaZM7ZdaMajSP6M05g7pggdeHofRwizUPlG6BUlAS+7FtJscM+i/6BMrViNlfw0ZUNEAcmbewDXKaab70a01rcAMXHu2p9q1fKX1L1V1788rzxkG5NY58SiWATFZnLzVtYnGpvdbX+Wq8a4Ms8O7628aigcGnLKvJys8dMniyTG169EtVdiz3xdxE="
 matrix:
   include:
     ##
@@ -14,13 +14,15 @@ matrix:
       sudo: true
       env: COMPONENTS=ifort
 before_install:
-  - bash -x install-icc.sh --components "${COMPONENTS}"
+  - ./install-icc.sh --components "${COMPONENTS}"
   - source ~/.bashrc
+  - chmod +x Asplundnew
 script:
   # Fortran 90 compiler
-  - '[[ "${COMPONENTS}" != *"ifort"* ]] || (ifort -save -o xnfdf.exe save/xnfdf.for && ./xnfdf.exe)'
-  - 'diff xnfpdf.dat.test xnfpdf.dat'
-  - 'diff xnfpdfmax.dat.test xnfpdfmax.dat.test'
+  - ifort -save -o xnfdf.exe save/xnfdf.for 
+  - ./Asplundnew
+  - diff xnfpdf.dat.test xnfpdf.dat
+  - diff xnfpdfmax.dat.test xnfpdfmax.dat.test
 
 after_script:
   - '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'

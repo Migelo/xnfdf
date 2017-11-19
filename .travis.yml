@@ -2,37 +2,27 @@ language: c
 sudo: false
 env:
   global:
-    # Intel Parallel Studio
-    - secure: "IK66gBj3RMbOqPAslQ2V09Sx8bV8aSHAdaO4beFuDXlRsaiBDqlKnII86Nw0ghELmwGAtH3Ow7I8pkjCyyB0v/R0ruOVW2SwPrtIcYGVEvT3BI9uQkCq9PInh4gdgdqsa5zxJU1XKtj9jX/gHbjlFgNJkXIlbvdttVQ8wad7EmSSv5i8Tb/gRDqa176lkGgSj5crMe072TEHuAe0Kllphol1mD0EjKkcfoFd9SBURG66aPuUOM4InSM+3o1Qw7t7+3oarOJPMu4eONAxp61iVWpIy1dRKGf1pYW5MwQ1JMkqc50MKF8EKjAwUVwggVTG7H5hntwwuDlzLyo33mEE8n//VbbjEBgozhyMcsYaIpPvGDA1bItgUohO8xf002JMG9bdbaC9jpU5TLLvg4rGDg6rbPTqtaIhTebA+xaWj2tHpf5Rv9D45EgtrxSfmMywGkoMf9iWEo1iGGgdmCMQKxwmmSG8FYIYJMGaq7Hmp8ZsCmQadOfaZM7ZdaMajSP6M05g7pggdeHofRwizUPlG6BUlAS+7FtJscM+i/6BMrViNlfw0ZUNEAcmbewDXKaab70a01rcAMXHu2p9q1fKX1L1V1788rzxkG5NY58SiWATFZnLzVtYnGpvdbX+Wq8a4Ms8O7628aigcGnLKvJys8dMniyTG169EtVdiz3xdxE="
+  - secure: IK66gBj3RMbOqPAslQ2V09Sx8bV8aSHAdaO4beFuDXlRsaiBDqlKnII86Nw0ghELmwGAtH3Ow7I8pkjCyyB0v/R0ruOVW2SwPrtIcYGVEvT3BI9uQkCq9PInh4gdgdqsa5zxJU1XKtj9jX/gHbjlFgNJkXIlbvdttVQ8wad7EmSSv5i8Tb/gRDqa176lkGgSj5crMe072TEHuAe0Kllphol1mD0EjKkcfoFd9SBURG66aPuUOM4InSM+3o1Qw7t7+3oarOJPMu4eONAxp61iVWpIy1dRKGf1pYW5MwQ1JMkqc50MKF8EKjAwUVwggVTG7H5hntwwuDlzLyo33mEE8n//VbbjEBgozhyMcsYaIpPvGDA1bItgUohO8xf002JMG9bdbaC9jpU5TLLvg4rGDg6rbPTqtaIhTebA+xaWj2tHpf5Rv9D45EgtrxSfmMywGkoMf9iWEo1iGGgdmCMQKxwmmSG8FYIYJMGaq7Hmp8ZsCmQadOfaZM7ZdaMajSP6M05g7pggdeHofRwizUPlG6BUlAS+7FtJscM+i/6BMrViNlfw0ZUNEAcmbewDXKaab70a01rcAMXHu2p9q1fKX1L1V1788rzxkG5NY58SiWATFZnLzVtYnGpvdbX+Wq8a4Ms8O7628aigcGnLKvJys8dMniyTG169EtVdiz3xdxE=
 matrix:
   include:
-    ##
-    # Test basic installation with different Travis environments
-    ##
-    # Ubuntu 12.04 container build
-    - os: linux
-      sudo: true
-      env: COMPONENTS=ifort
+  - os: linux
+    sudo: true
+    env: COMPONENTS=ifort
 before_install:
-  - chmod +x install-icc.sh
-  - ./install-icc.sh --components "${COMPONENTS}"
-  - source ~/.bashrc
-  - chmod +x Asplundnew
-  - wget http://wwwuser.oats.inaf.it/castelli/sources/dfsynthe/molecules.dat
-  - wget http://wwwuser.oats.inaf.it/castelli/sources/dfsynthe/pfiron.dat
-  - wget http://wwwuser.oats.inaf.it/castelli/sources/dfsynthe/continua.dat
+- chmod +x install-icc.sh
+- ./install-icc.sh --components "${COMPONENTS}"
+- source ~/.bashrc
+- chmod +x Asplundnew
+- wget http://wwwuser.oats.inaf.it/castelli/sources/dfsynthe/molecules.dat
+- wget http://wwwuser.oats.inaf.it/castelli/sources/dfsynthe/pfiron.dat
+- wget http://wwwuser.oats.inaf.it/castelli/sources/dfsynthe/continua.dat
 script:
-  # Fortran 90 compiler
-  - ifort -save -o xnfdf.exe save/xnfdf.for 
-  - bash Asplundnew
-  - diff xnfpdf.dat.test xnfpdf.dat
-  - diff xnfpdfmax.dat xnfpdfmax.dat.test
-
+- ifort -save -o xnfdf.exe save/xnfdf.for
+- bash Asplundnew
+- diff xnfpdf.dat.test xnfpdf.dat
+- diff xnfpdfmax.dat xnfpdfmax.dat.test
 after_script:
-  - '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'
-
-
-#notifications:
-#  email:
-#    on_success: change
-#    on_failure: change
+- '[[ ! -z "${INTEL_INSTALL_PATH}" ]] && uninstall_intel_software'
+notifications:
+  slack:
+    secure: Ma/y2WeXKHwg1fDVKyKk2usern3t/s0Yc8sZZm/s+7nYqH6lFlXAXtcFdOhgOWiE2p5I5INqMKVylPCmPRWoz4YbpkOHG9rx7UYC2Zed7LRI4eID71697h6MRi2LpmZ4ZN7olPPEowKEV4dJLEHuoYRu7H0RUqOEXD7LtPXOJCDH+6/iqkTeFaNRl5xIiBWyb+h+D1tn/n169Qui7Ovu5z5OeA1rcwAumHIgZaxv3JrpIJFBQB2kaQbqvrMCznJ5tex7SCl4xXTjWLzwefV3eastfqvAMFX4AvzHbgnylTdfDaZXEJ0m8QcbATPge/gM2htj8dc7YfDexegAtjozAsiQw/2iY3LcLrX1KGmERnkJ30zaU4fqpU+xwBm9Nr4cm8eLI+bkF4vsMCcACHcrijEoNm3vSduwaf5pMyQQBSJy2BEv/vrf4oljnbexiGYBMNeljyqk6gQsg4cXIDWTnlh+/uRAPuV35LkimYd59TnEY0MTLv/lLGT/8SqEYIyGzCmarUMrFpRc0lrDf69vY6UQlpjBLnGk+L1FJ3D9wZgMaG6LjT8d7z7Ea5neWB7lj0jpgV+9OgtC8E26VNuh3RpRlt4rcLwl2xbN7KhGWckHjGsJ6LGaI72ggiMXOUud5AqAscgICRd8xGen4leEpv78dtKdWYRG/SrAJ41fdIc=
